@@ -1,0 +1,54 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete
+} from '@nestjs/common';
+import { {{pascalCase name}}CreateService } from './services/{{name}}-create.service';
+import { {{pascalCase name}}DeleteService } from './services/{{name}}-delete.service';
+import { {{pascalCase name}}EditService } from './services/{{name}}-edit.service';
+import { {{pascalCase name}}GetAllService } from './services/{{name}}-get-all.service';
+import { {{pascalCase name}}GetService } from './services/{{name}}-get.service';
+import { Create{{pascalCase name}}Dto } from './dto/create-{{camelCase name}}.dto';
+import { Update{{pascalCase name}}Dto } from './dto/update-{{camelCase name}}.dto';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('{{name}}')
+@Controller('{{ name }}')
+export class {{pascalCase name}}Controller {
+  constructor(
+    private readonly {{name}}CreateService: {{pascalCase name}}CreateService,
+    private readonly {{name}}DeleteService: {{pascalCase name}}DeleteService,
+    private readonly {{name}}EditService: {{pascalCase name}}EditService,
+    private readonly {{name}}GetAllService: {{pascalCase name}}GetAllService,
+    private readonly {{name}}GetService: {{pascalCase name}}GetService
+  ) {}
+
+  @Post()
+  create(@Body() create{{pascalCase name}}Dto: Create{{pascalCase name}}Dto) {
+    return this.{{name}}CreateService.exec(create{{pascalCase name}}Dto);
+  }
+
+  @Get()
+  findAll() {
+    return this.{{name}}GetAllService.exec();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.{{name}}GetService.exec(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() update{{pascalCase name}}Dto: Update{{pascalCase name}}Dto) {
+    return this.{{name}}EditService.exec(id, update{{pascalCase name}}Dto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.{{name}}DeleteService.exec(id);
+  }
+}

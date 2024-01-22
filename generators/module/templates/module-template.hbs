@@ -1,0 +1,23 @@
+import { Module } from '@nestjs/common';
+import { {{pascalCase name}}Controller } from './{{ name }}.controller';
+import { {{pascalCase name}}CreateService } from './services/{{camelCase name}}-create.service';
+import { {{pascalCase name}}DeleteService } from './services/{{camelCase name}}-delete.service';
+import { {{pascalCase name}}EditService } from './services/{{camelCase name}}-edit.service';
+import { {{pascalCase name}}GetAllService } from './services/{{camelCase name}}-get-all.service';
+import { {{pascalCase name}}GetService } from './services/{{camelCase name}}-get.service';
+import { PrismaService } from '@/shared/services/prisma.service';
+import { {{pascalCase name}}Repository } from './repository/{{ name }}.repository';
+
+@Module({
+  controllers: [{{ pascalCase name }}Controller],
+  providers: [
+    {{pascalCase name}}CreateService,
+    {{pascalCase name}}DeleteService,
+    {{pascalCase name}}EditService,
+    {{pascalCase name}}GetAllService,
+    {{pascalCase name}}GetService,
+    PrismaService,
+    {{pascalCase name}}Repository
+  ]
+})
+export class {{pascalCase name}}Module {}

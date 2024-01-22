@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  name       String
+  password   String
+  plan       Plan        @relation(fields: [plan_id], references: [id])
+  plan_id    String
+  Auth       UserAuth?
+  Preference Preference?
+
+  @@map("user")
+}
+
+model Plan {
+  id          String  @id @default(uuid())
+  description String  @unique
+  price       Decimal @db.Decimal(4, 2)
+  User        User[]
+
+  @@map("plan")
+}
+
+model UserAuth {
+  id                               String  @id @default(uuid())
+  user                             User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id                          String  @unique
+  admin                            Boolean @default(false)
+  is_active                        Boolean @default(false)
+  activation_code                  String  @db.Char(6)
+  activation_code_expiration       String  @db.Char(200)
+  recover_password_code            String? @db.Char(6)
+  recover_password_code_expiration String? @db.Char(200)
+
+  @@map("user_auth")
+}
+
+model Preference {
+  id           String @id @default(uuid())
+  user         User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id      String @unique
+  app_language String @db.Char(6)
+  theme        String @db.Char(6)
+
+  @@map("preference")
+}

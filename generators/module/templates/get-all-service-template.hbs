@@ -1,0 +1,11 @@
+import { Injectable } from '@nestjs/common';
+import { {{pascalCase name}}Repository } from '../repository/{{name}}.repository';
+
+@Injectable()
+export class {{pascalCase name}}GetAllService {
+  constructor(private readonly {{name}}Repository: {{pascalCase name}}Repository) {}
+
+  exec() {
+    return 'This action fetch all {{pascalCase name}} elements';
+  }
+}

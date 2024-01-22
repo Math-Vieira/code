@@ -1,0 +1,11 @@
+import { Injectable } from '@nestjs/common';
+import { Update{{pascalCase name}}Dto } from '../dto/update-{{camelCase name}}.dto';
+import { {{pascalCase name}}Repository } from '../repository/{{name}}.repository';
+
+@Injectable()
+export class {{pascalCase name}}EditService {
+  constructor(private readonly {{name}}Repository: {{pascalCase name}}Repository) {}
+  exec(id: string, update{{pascalCase name}}Dto: Update{{pascalCase name}}Dto) {
+    return 'This action edit a {{pascalCase name}}';
+  }
+}
